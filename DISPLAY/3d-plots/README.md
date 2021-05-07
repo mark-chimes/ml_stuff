@@ -3,7 +3,7 @@
 Look at the pretty pictures!
 
 ## Dataset
-Data is generated from a function and then perturbed randomly using a function, and then perturbed randomly using a normal distribution.
+Data is generated from a function and then perturbed randomly using a normal distribution.
 
 ### Data
 ![High Angle](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/3d-plots/pictures/high-angle.png)
