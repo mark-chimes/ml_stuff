@@ -132,6 +132,13 @@ def floatAndProjections(x,y,z, main_alph=0.8, proj_alph=0.08, v_angle=0, h_angle
     ax.scatter3D(x, y, 2*z_reflect(v_angle), c = -np.sqrt(x**2 + y**2), alpha=proj_alph, cmap='hot')
     ax.scatter3D(x, y_reflect(h_angle), z, c = -np.sqrt(x**2 + y**2), alpha=proj_alph, cmap='hot')
     ax.scatter3D(x_reflect(h_angle), y, z, c = -np.sqrt(x**2 + y**2), alpha=proj_alph, cmap='hot')
+    
+def floatAndProjectionsColorMarker(x,y,z, mark='2', col='blue', main_alph=0.8, proj_alph=0.08, v_angle=0, h_angle=0): 
+    ax.scatter3D(x, y, z, alpha=main_alph, marker=mark, color='blue')
+    ax.scatter3D(x, y, 2*z_reflect(v_angle), alpha=proj_alph, marker=mark, color='blue')
+    ax.scatter3D(x, y_reflect(h_angle), z, alpha=proj_alph, marker=mark,  color='blue')
+    ax.scatter3D(x_reflect(h_angle), y, z,alpha=proj_alph, marker=mark, color='blue')
+
 
 def predictionFloatAndProjections(x,y,z, main_alph=0.5, proj_alph=0.3, v_angle=0, h_angle=0): 
     ax.scatter3D(x, y, z, alpha=0.5, marker='.', color='green')
@@ -209,9 +216,9 @@ for a, b in angles:
     plt.suptitle('Dataset and Training Points')
     standardAxLimitsAndLabels(ax)
     ax.view_init(a, b)
-    floatAndProjections(sx, sy, sz, 0.2, 0.02, a, b)
-    ax.scatter3D(sx, sy, sz, c = -np.sqrt(sx**2 + sy**2), alpha=0.2, cmap='hot')
-    ax.scatter3D(X_train[:,0], X_train[:,1], y_train, marker='1',  alpha=0.8, color='blue')
+    floatAndProjections(sx, sy, sz, 0.02, 0.01, a, b)
+    floatAndProjectionsColorMarker(X_train[:,0], X_train[:,1], y_train, \
+                                   '2', 'blue',  1, 0.5, a, b)
     plt.show()
 
 #%% Generating
