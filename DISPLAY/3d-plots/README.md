@@ -3,7 +3,12 @@
 Look at the pretty pictures!
 
 ## Dataset
-Data is generated from a function and then perturbed randomly using a normal distribution.
+Input is normally distributed (with mean 0) along x and y with variance 0.1 and 0.2 respectively.
+Ouput is just a function I cooked up. It is calculated as 
+
+    z = x*y - x**2 + x - 2*y**2 + y + R
+  
+Where R is a random perturbation, normally distributed with variance 0.1.
 
 ### Data
 ![High Angle](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/3d-plots/pictures/high-angle.png)
