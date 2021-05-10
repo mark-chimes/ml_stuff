@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+'''
+Taken from https://scikit-learn.org/stable/auto_examples/linear_model/plot_ols.html#sphx-glr-auto-examples-linear-model-plot-ols-py
+'''
+
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn import datasets, linear_model
