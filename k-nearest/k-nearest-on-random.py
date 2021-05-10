@@ -98,10 +98,8 @@ plt.show()
 
 h = .02  # step size in the mesh
 
-
-
-xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
-                 np.arange(y_min, y_max, h))
+xx, yy = np.meshgrid(np.arange(x_min-0.1, x_max+0.1, h),
+                 np.arange(y_min-0.1, y_max+0.1, h))
 #%% Nearest Neighbours
 
 for n_neighbors in [1,2,5,10,15,20]:
