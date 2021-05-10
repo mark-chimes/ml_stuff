@@ -15,9 +15,10 @@ Where R is a random perturbation, normally distributed with variance 0.1.
 ## Least-Squares Approximations
 ![Least Squares](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/3d-plots/pictures/least-squares-approximated.png)
 
-## Linear Regression
+## Linear Regression with Good Points
 Only 3 training points are used for the linear regression for this example, specifically to get a poorly-trained model for demonstration. 
-Even so, with these three particular points, the approximation is actually not completely terrible.
+
+With the first random selection of three particular points, the approximation is somewhat reasonable.
 
 ### Dataset Projections with Training Data Marked
 ![Training Data](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/3d-plots/pictures/training-data.png)
@@ -29,3 +30,16 @@ Even so, with these three particular points, the approximation is actually not c
 ![Linear Regression](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/3d-plots/pictures/linear-regression-approximated.png)
 ![Linear Regression 2](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/3d-plots/pictures/linear-regression-low-angle.png )
 
+
+## Linear Regression with Bad Points
+With a different random selection, the approximation is terrible
+
+### Dataset Projections with Training Data Marked
+![training-points](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/3d-plots/pictures/terrible-sample/training.png)
+![training-x](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/3d-plots/pictures/terrible-sample/training-x.png)
+![training-y](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/3d-plots/pictures/terrible-sample/training-y.png)
+![training-3d](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/3d-plots/pictures/terrible-sample/training-3d.png)
+
+### Output of Linear Regression
+![approx-plane](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/3d-plots/pictures/terrible-sample/approx-plane.png)
+![approx-points](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/3d-plots/pictures/terrible-sample/approx-points.png)
