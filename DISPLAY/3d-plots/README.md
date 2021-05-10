@@ -31,7 +31,7 @@ With the first random selection of three particular points, the approximation is
 ![Linear Regression 2](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/3d-plots/pictures/linear-regression-low-angle.png )
 
 
-## Linear Regression with Good Points
+## Linear Regression with Bad Points
 With a different random selection, the approximation is terrible
 
 ### Dataset Projections with Training Data Marked
