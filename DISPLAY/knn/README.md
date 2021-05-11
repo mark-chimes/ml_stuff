@@ -12,7 +12,7 @@ Run using
 
 ## Two circles
 
-![circ_base](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/knn/pictures/circ_base.png)
+![circ-base](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/knn/pictures/circ-base.png)
 ![circ_k1](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/knn/pictures/circ_k1.png)
 ![circ_k2](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/knn/pictures/circ_k2.png)
 ![circ_k5](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/knn/pictures/circ_k5.png)
