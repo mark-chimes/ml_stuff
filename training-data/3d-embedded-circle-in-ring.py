@@ -11,7 +11,6 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
-from sklearn.linear_model import SGDClassifier
 
 
 #%% Display Limits
@@ -60,10 +59,7 @@ sby = np.random.normal(mu_by, sigma_by, Nb)
 
 angles = [(45,45), (45,20), (45,0), (20,0), (0,0), \
           (0,-20), (0,-45), (20,-45), (45,-45)]
-
-
-# angles = [(45,45), (45,20)]
-
+    
 def standardFlatLimitsAndLabels(plt): 
     plt.xlim(xlim)
     plt.ylim(ylim)
@@ -164,114 +160,13 @@ for a, b in angles:
     ax.view_init(a, b)
     # floatAndProjections(sx, sy, sz, 0.3, 0.03, a, b)
     predictionWireframeFloatAndPredictions(gZ, 0.05, 0.01, a, b)
-    floatAndProjections(sax, say, saz, col='blue', main_alph=0.5, proj_alph=0.01)
-    floatAndProjections(sbx, sby, sbz, col='red', main_alph=0.5, proj_alph=0.01)
-    plt.show()
-    
-#%% Stochastic Gradient Descent
-
-
-total = Na + Nb
-test_N = 100
-train_N = total - test_N
-
-SX = np.concatenate((sax, sbx))
-SY = np.concatenate((say, sby))
-SZ = generatingFunction(SX, SY)
-
-SC = np.concatenate((np.ones(sax.shape), np.zeros(sbx.shape)))
-
-all_points = np.column_stack((SX, SY, SZ, SC))
-np.random.shuffle(all_points)
-X = all_points[:,:-1] # first two columns
-y = np.ravel(all_points[:,-1:]) # last column
-y_colors = np.array(['blue' if c > 0.5 else 'red' for c in y])
-
-for a, b in angles: 
-    # Plot the points with true surface.
-    ax = plt.axes(projection='3d')
-    plt.suptitle('Plotting After Shuffle using Z-values for color')
-    standardAxLimitsAndLabels(ax)
-    ax.view_init(a, b)
-    # floatAndProjections(sx, sy, sz, 0.3, 0.03, a, b)
-    predictionWireframeFloatAndPredictions(gZ, 0.05, 0.01, a, b)
-    floatAndProjections(X[:,0:1], X[:,1:2], X[:,2:3], col=y_colors, main_alph=0.5, proj_alph=0.01)
+    floatAndProjections(sax, say, saz, col='red', main_alph=0.5, proj_alph=0.01)
+    floatAndProjections(sbx, sby, sbz, col='blue', main_alph=0.5, proj_alph=0.002)
     plt.show()
     
 
-X_train  = X[:train_N,:]
-X_test  = X[train_N:,:]
-
-y_train = y[:train_N]
-y_test = y[train_N:]
-
-y_train_colors = np.array(['blue' if x > 0.5 else 'red' for x in y_train]).T
-y_test_colors = np.array(['cyan' if x > 0.5 else 'pink' for x in y_test]).T
-
-plt.suptitle('Training and Test Datasets')
-standardFlatLimitsAndLabels(plt)
-plt.scatter(X_train[:,0:1], X_train[:,1:2], marker='2', c=y_train_colors)
-plt.scatter(X_test[:,0:1], X_test[:,1:2], marker=',', c=y_test_colors)
-plt.show()
 
 
-iterations = 10
-
-clf = SGDClassifier(loss="hinge", penalty="l2", max_iter=iterations)
-clf.fit(X_train, y_train)
-y_predict = clf.predict(X_test)
-
-y_predict_colors = np.array(['blue' if x > 0.5 else 'red' for x in y_predict]).T
-
-
-for a, b in angles: 
-    # Plot the points with true surface.
-    ax = plt.axes(projection='3d')
-    plt.suptitle('Predicted values after ' + str(iterations) + ' iterations')
-    standardAxLimitsAndLabels(ax)
-    ax.view_init(a, b)
-    # floatAndProjections(sx, sy, sz, 0.3, 0.03, a, b)
-    # predictionWireframeFloatAndPredictions(gZ, 0.05, 0.01, a, b)
-    floatAndProjections(X_test[:,0:1], X_test[:,1:2], X_test[:,2:3], col=y_predict_colors, main_alph=0.5, proj_alph=0.01)
-    plt.show()
-
-
-a,b = (45,45)
-
-for iterations in [1,2,5,10, 20]:
-    ax = plt.axes(projection='3d')
-    plt.suptitle('Predicted values after ' + str(iterations) + ' iterations')
-    standardAxLimitsAndLabels(ax)
-    ax.view_init(a, b)
-    # floatAndProjections(sx, sy, sz, 0.3, 0.03, a, b)
-    # predictionWireframeFloatAndPredictions(gZ, 0.05, 0.01, a, b)
-    floatAndProjections(X_test[:,0:1], X_test[:,1:2], X_test[:,2:3], col=y_predict_colors, main_alph=0.5, proj_alph=0.01)
-    plt.show()
-
-'''
-    clf = SGDClassifier(loss="hinge", penalty="l2", max_iter=iterations)
-    clf.fit(XY_train, Z_train)
-    
-    Z_predict = clf.predict(XY_test)
-    
-    cmap_light = ListedColormap(['pink', 'cyan'])
-    
-    h = .02  # step size in the mesh
-    xx, xy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
-    Z_mesh = clf.predict(np.c_[xx.ravel(), xy.ravel()])
-    
-    Z_mesh_reshape = Z_mesh.reshape(xx.shape)
-    #plt.figure(figsize=(8, 6))
-    
-    standardFlatLimitsAndLabels(plt)
-    title = 'Max iterations: ' + str(iterations)
-    plt.suptitle(title)
-    plt.contourf(xx, xy, Z_mesh_reshape, cmap=cmap_light)
-    plt.scatter(XY_train[:,:1], XY_train[:,1:], marker='.', c=Z_train_colors)
-    
-    plt.show()
-
-'''
 
 
 
