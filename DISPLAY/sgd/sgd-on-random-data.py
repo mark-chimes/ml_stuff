@@ -70,7 +70,7 @@ plt.show()
 #%% Data in correct format and shuffled
 
 total = Na + Nb
-test_N = 200
+test_N = 100
 train_N = total - test_N
 
 X = np.concatenate((sax, sbx))
@@ -98,8 +98,8 @@ Z_test_colors = np.array(['cyan' if x > 0.5 else 'pink' for x in Z_test]).T
 
 plt.suptitle('Training and Test Datasets')
 standardFlatLimitsAndLabels(plt)
-plt.scatter(X_test[:,:1], X_test[:,1:], marker=',', c=Z_test_colors)
 plt.scatter(X_train[:,:1], X_train[:,1:], marker='2', c=Z_train_colors)
+plt.scatter(X_test[:,:1], X_test[:,1:], marker=',', c=Z_test_colors)
 
 plt.show()
 
