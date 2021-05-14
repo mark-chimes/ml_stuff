@@ -61,8 +61,7 @@ sby = np.random.normal(mu_by, sigma_by, Nb)
 angles = [(45,45), (45,20), (45,0), (20,0), (0,0), \
           (0,-20), (0,-45), (20,-45), (45,-45)]
 
-
-# angles = [(45,45), (45,20)]
+# angles = [(45,45), (20,0)]
 
 def standardFlatLimitsAndLabels(plt): 
     plt.xlim(xlim)
@@ -110,27 +109,11 @@ def standardFlatLimitsAndLabels(plt):
     h.set_rotation(0)    
 
 
-#%% Plot Flat Data
+def predictionWireframeFloatAndPredictions(gen_func, main_alph=0.2, proj_alph=0.05, v_angle=0, h_angle=0):
+    gx = gy = np.arange(-0.75, 0.75, 0.1)
+    gX, gY = np.meshgrid(gx, gy)
+    gZ0 = np.zeros(gX.shape)
 
-plt.suptitle('Base Data')
-standardFlatLimitsAndLabels(plt)
-plt.scatter(sax, say, marker='.', color='red')
-plt.scatter(sbx, sby, marker='.', color='blue')
-plt.show()
-
-
-#%% Generate floating data
-
-def generatingFunction(x, y): 
-    return 0.5*x + x**2 + 0.5*y + y**2
-
-gx = gy = np.arange(-0.75, 0.75, 0.1)
-gX, gY = np.meshgrid(gx, gy)
-gZ0 = np.zeros(gX.shape)
-gz = np.array(np.ravel(generatingFunction(gX, gY)))
-gZ = gz.reshape(gX.shape)
-
-def predictionWireframeFloatAndPredictions(z, main_alph=0.2, proj_alph=0.05, v_angle=0, h_angle=0):
     Z = -np.sqrt(gX**2 + gY**2)
     norm = plt.Normalize(Z.min(), Z.max())
     colors = cm.viridis(norm(Z))
@@ -139,16 +122,10 @@ def predictionWireframeFloatAndPredictions(z, main_alph=0.2, proj_alph=0.05, v_a
     def plot_surfy(ix, iy, iz, ialph): 
          ax.plot_surface(ix, iy, iz, facecolors=colors, rcount=rcount, ccount=ccount, alpha=ialph)
          
-    plot_surfy(gX, gY, z, 0.2)
+    plot_surfy(gX, gY, gen_func(gX, gY), 0.2)
     plot_surfy(gX, gY, gZ0+z_reflect(v_angle), 0.05)
-    plot_surfy(gX, y_reflect(h_angle), z, 0.05)
-    plot_surfy(x_reflect(h_angle), gY, z, 0.05)
-
-#%% Generate floating data
-
-saz = generatingFunction(sax, say)
-sbz = generatingFunction(sbx, sby)
-
+    plot_surfy(gX, y_reflect(h_angle), gen_func(gX, gY), 0.05)
+    plot_surfy(x_reflect(h_angle), gY, gen_func(gX, gY), 0.05)
 
 def floatAndProjections(x,y,z, col='green', main_alph=0.8, proj_alph=0.08, v_angle=0, h_angle=0): 
     ax.scatter3D(x, y, z,  marker='.', color=col, alpha=main_alph)
@@ -156,14 +133,34 @@ def floatAndProjections(x,y,z, col='green', main_alph=0.8, proj_alph=0.08, v_ang
     ax.scatter3D(x, y_reflect(h_angle), z,  color=col, alpha=proj_alph)
     ax.scatter3D(x_reflect(h_angle), y, z,  color=col, alpha=proj_alph)
 
+
+#%% Plot Flat Data
+
+plt.suptitle('Base Data')
+standardFlatLimitsAndLabels(plt)
+plt.scatter(sax, say, marker='.', color='blue')
+plt.scatter(sbx, sby, marker='.', color='red')
+plt.show()
+
+
+#%% Generating function
+
+def generatingFunction(x, y): 
+    return 0.5*x + x**2 + 0.5*y + y**2
+
+#%% Plot points and the generating function wireframe
+
+saz = generatingFunction(sax, say)
+sbz = generatingFunction(sbx, sby)
+
 for a, b in angles: 
     # Plot the points with true surface.
     ax = plt.axes(projection='3d')
-    plt.suptitle('Dataset and \n' + r'Generating Function Wireframe')
+    plt.suptitle('Dataset and \n' + r'Embedding Wireframe')
     standardAxLimitsAndLabels(ax)
     ax.view_init(a, b)
     # floatAndProjections(sx, sy, sz, 0.3, 0.03, a, b)
-    predictionWireframeFloatAndPredictions(gZ, 0.05, 0.01, a, b)
+    predictionWireframeFloatAndPredictions(generatingFunction, 0.05, 0.01, a, b)
     floatAndProjections(sax, say, saz, col='blue', main_alph=0.5, proj_alph=0.01)
     floatAndProjections(sbx, sby, sbz, col='red', main_alph=0.5, proj_alph=0.01)
     plt.show()
@@ -194,7 +191,7 @@ for a, b in angles:
     standardAxLimitsAndLabels(ax)
     ax.view_init(a, b)
     # floatAndProjections(sx, sy, sz, 0.3, 0.03, a, b)
-    predictionWireframeFloatAndPredictions(gZ, 0.05, 0.01, a, b)
+    predictionWireframeFloatAndPredictions(generatingFunction, 0.05, 0.01, a, b)
     floatAndProjections(X[:,0:1], X[:,1:2], X[:,2:3], col=y_colors, main_alph=0.5, proj_alph=0.01)
     plt.show()
     
@@ -214,41 +211,96 @@ plt.scatter(X_train[:,0:1], X_train[:,1:2], marker='2', c=y_train_colors)
 plt.scatter(X_test[:,0:1], X_test[:,1:2], marker=',', c=y_test_colors)
 plt.show()
 
-
-iterations = 10
-
-clf = SGDClassifier(loss="hinge", penalty="l2", max_iter=iterations)
-clf.fit(X_train, y_train)
-y_predict = clf.predict(X_test)
-
-y_predict_colors = np.array(['blue' if x > 0.5 else 'red' for x in y_predict]).T
-
-
-for a, b in angles: 
-    # Plot the points with true surface.
-    ax = plt.axes(projection='3d')
-    plt.suptitle('Predicted values after ' + str(iterations) + ' iterations')
-    standardAxLimitsAndLabels(ax)
-    ax.view_init(a, b)
-    # floatAndProjections(sx, sy, sz, 0.3, 0.03, a, b)
-    # predictionWireframeFloatAndPredictions(gZ, 0.05, 0.01, a, b)
-    floatAndProjections(X_test[:,0:1], X_test[:,1:2], X_test[:,2:3], col=y_predict_colors, main_alph=0.5, proj_alph=0.01)
-    plt.show()
-
-
-a,b = (45,45)
-
-for iterations in [1,2,5,10, 20]:
-    ax = plt.axes(projection='3d')
-    plt.suptitle('Predicted values after ' + str(iterations) + ' iterations')
-    standardAxLimitsAndLabels(ax)
-    ax.view_init(a, b)
-    # floatAndProjections(sx, sy, sz, 0.3, 0.03, a, b)
-    # predictionWireframeFloatAndPredictions(gZ, 0.05, 0.01, a, b)
-    floatAndProjections(X_test[:,0:1], X_test[:,1:2], X_test[:,2:3], col=y_predict_colors, main_alph=0.5, proj_alph=0.01)
-    plt.show()
+for iterations in [10]:
+    #iterations = 10
+    
+    clf = SGDClassifier(loss="hinge", penalty="l2", max_iter=iterations)
+    clf.fit(X_train, y_train)
+    y_predict = clf.predict(X_test)
+    y_predict_colors = np.array(['blue' if x > 0.5 else 'red' for x in y_predict]).T
+    
+    coef = clf.coef_
+    intercept = clf.intercept_
+    coef0 = coef[0,0]
+    coef1 = coef[0,1]
+    coef2 = coef[0,2]
+    icpt = intercept[0]
+    
+    m1 = coef0 / -coef2
+    m2 = coef1 / -coef2
+    c = icpt / -coef2
+    
+    plane_func = lambda x,y :  m1*x + m2*y + c
+    
+    for a, b in angles: 
+        
+        # Plot the points with true surface.
+        ax = plt.axes(projection='3d')
+        plt.suptitle('Predicted values after ' + str(iterations) + ' iterations with separating plane')
+        standardAxLimitsAndLabels(ax)
+        ax.view_init(a, b)
+        # floatAndProjections(sx, sy, sz, 0.3, 0.03, a, b)
+        # predictionWireframeFloatAndPredictions(generatingFunction, 0.05, 0.01, a, b)
+    
+        predictionWireframeFloatAndPredictions(plane_func, v_angle=a, h_angle=b)
+    
+        # ax.plot_surface(XG, YG, ZG, color='green', alpha=0.25)
+        
+        floatAndProjections(X_test[:,0:1], X_test[:,1:2], X_test[:,2:3], col=y_predict_colors, main_alph=0.5, proj_alph=0.01)
+        plt.show()
 
 '''
+for iterations in [20]: # [1,2,5,10, 20]:
+    ax = plt.axes(projection='3d')
+    plt.suptitle('Predicted values after ' + str(iterations) + ' iterations')
+    standardAxLimitsAndLabels(ax)
+    ax.view_init(a, b)
+    # floatAndProjections(sx, sy, sz, 0.3, 0.03, a, b)
+    predictionWireframeFloatAndPredictions(generatingFunction, 0.05, 0.01, a, b)
+    floatAndProjections(X_test[:,0:1], X_test[:,1:2], X_test[:,2:3], col=y_predict_colors, main_alph=0.5, proj_alph=0.01)
+
+
+    plt.show()
+
+    coef = clf.coef_
+    intercept = clf.intercept_
+    
+    print("Plotting hyperplane")
+    coef0 = coef[0,0]
+    coef1 = coef[0,1]
+    coef2 = coef[0,2]
+    
+    icpt = intercept[0]
+    
+    m1 = coef0 / -coef2
+    m2 = coef1 / -coef2
+    c = icpt / -coef2
+
+    def plane(xi, yi):
+        print("Plane")
+        # return m1*xi + m2*yi + c
+        return 0*xi + 0*yi + 0
+
+    x0 = -1
+    x1 = 1
+    y0 = -1
+    y1 = 1
+    
+    XQ = np.array([x0, x1])
+    YQ = np.array([y0, y1])
+    XG, YG = np.meshgrid(XQ, YQ)
+    ZG = 0*XG + 0*YG
+    # ZG = plane(XG, YG)
+
+          
+    #ax = plt.axes(projection='3d')
+    plt.suptitle('Hyperplane')
+    print("Plotting")
+    ax = plt.axes(projection='3d')
+    ax.plot_surface(XG, YG, ZG, alpha=1)
+    print("Plot show")
+    plt.show()
+
     clf = SGDClassifier(loss="hinge", penalty="l2", max_iter=iterations)
     clf.fit(XY_train, Z_train)
     

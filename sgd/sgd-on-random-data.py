@@ -103,10 +103,34 @@ plt.scatter(X_train[:,:1], X_train[:,1:], marker='2', c=Z_train_colors)
 
 plt.show()
 
+#%% Plot hyperplane
+
+def plot_hyperplane(coef, intercept):
+    coef0 = coef[0,0]
+    coef1 = coef[0,1]
+    
+    icpt = intercept[0]
+    
+    m = coef0 / -coef1
+    c = icpt / -coef1
+
+    def line(x0):
+        return m*x0 + c
+
+    plt.plot([x_min, x_max], [line(x_min), line(x_max)], \
+             ls="--", color='black')
+
+
+
 #%% Stochastic Gradient Descent
+
 for iterations in [1,2,5,10]:
     clf = SGDClassifier(loss="hinge", penalty="l2", max_iter=iterations)
     clf.fit(X_train, Z_train)
+    
+    coef = clf.coef_
+    intercept = clf.intercept_
+    
     
     Z_predict = clf.predict(X_test)
     
@@ -125,13 +149,9 @@ for iterations in [1,2,5,10]:
     plt.contourf(xx, xy, Z_mesh_reshape, cmap=cmap_light)
     plt.scatter(X_train[:,:1], X_train[:,1:], marker='.', c=Z_train_colors)
     
+    plot_hyperplane(coef, intercept)
+    
     plt.show()
-
-
-
-
-
-
 
 
 
