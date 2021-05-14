@@ -57,3 +57,12 @@ This is only slightly useful in practice. We are giving the algorithm quite a lo
 However, from a theoretical standpoint it is very interesting. 
 If you learned, say, multiple layers of linear functions separated by non-linear embeddings, you could fit quite arbitrary data. 
 In a very rough sense this is what a deep neural network does. 
+
+# With Thanks To 
+
+This bit of experimentation was inspired by https://colah.github.io/posts/2014-03-NN-Manifolds-Topology/ so go look there for more information
+and some very nice visualizations! 
+
+![Topology 3D](https://colah.github.io/posts/2014-03-NN-Manifolds-Topology/img/topology_3d.png)
+
+
