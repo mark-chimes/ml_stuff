@@ -256,7 +256,7 @@ for iterations in [10]:
     
     plt.suptitle('Predicted Values')
     standardFlatLimitsAndLabels(plt)
-    Z_predict_colors = np.array(['cyan' if x > 0.5 else 'magenta' for x in y_predict]).T
+    Z_predict_colors = np.array(['cyan' if x > 0.5 else 'pink' for x in y_predict]).T
 
     plt.scatter(gX, gY, marker='.', c=Z_predict_colors)
     plt.scatter(sax, say, marker='.', color='blue')
