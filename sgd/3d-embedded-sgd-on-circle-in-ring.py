@@ -58,10 +58,10 @@ sby = np.random.normal(mu_by, sigma_by, Nb)
 
 #%% Plotting Functions
 
-angles = [(45,45), (45,20), (45,0), (20,0), (0,0), \
-          (0,-20), (0,-45), (20,-45), (45,-45)]
+#angles = [(45,45), (45,20), (45,0), (20,0), (0,0), \
+#          (0,-20), (0,-45), (20,-45), (45,-45)]
 
-# angles = [(45,45), (20,0)]
+angles = [(45,45), (20,0)]
 
 def standardFlatLimitsAndLabels(plt): 
     plt.xlim(xlim)
@@ -249,6 +249,19 @@ for iterations in [10]:
         floatAndProjections(X_test[:,0:1], X_test[:,1:2], X_test[:,2:3], col=y_predict_colors, main_alph=0.5, proj_alph=0.01)
         plt.show()
 
+    gx = gy = np.arange(-1, 1, 0.01)
+    gX, gY = np.meshgrid(gx, gy)
+    gZ = np.column_stack((gX.ravel(), gY.ravel(), generatingFunction(gX, gY).ravel()))
+    y_predict = clf.predict(gZ)
+    
+    plt.suptitle('Predicted Values')
+    standardFlatLimitsAndLabels(plt)
+    Z_predict_colors = np.array(['cyan' if x > 0.5 else 'magenta' for x in y_predict]).T
+
+    plt.scatter(gX, gY, marker='.', c=Z_predict_colors)
+    plt.scatter(sax, say, marker='.', color='blue')
+    plt.scatter(sbx, sby, marker='.', color='red')
+    plt.show()
 '''
 for iterations in [20]: # [1,2,5,10, 20]:
     ax = plt.axes(projection='3d')
