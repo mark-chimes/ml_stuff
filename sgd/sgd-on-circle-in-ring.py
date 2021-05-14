@@ -69,8 +69,8 @@ def standardFlatLimitsAndLabels(plt):
 
 plt.suptitle('Base Data')
 standardFlatLimitsAndLabels(plt)
-plt.scatter(sax, say, marker='.', color='red')
-plt.scatter(sbx, sby, marker='.', color='blue')
+plt.scatter(sax, say, marker='.', color='blue')
+plt.scatter(sbx, sby, marker='.', color='red')
 plt.show()
 
 #%% Data in correct format and shuffled
@@ -110,7 +110,7 @@ plt.scatter(XY_test[:,:1], XY_test[:,1:], marker=',', c=Z_test_colors)
 plt.show()
 
 #%% Stochastic Gradient Descent
-for iterations in [1,2,5,10, 20]:
+for iterations in [10,10,10,10,10]:
     clf = SGDClassifier(loss="hinge", penalty="l2", max_iter=iterations)
     clf.fit(XY_train, Z_train)
     
@@ -130,7 +130,8 @@ for iterations in [1,2,5,10, 20]:
     plt.suptitle(title)
     plt.contourf(xx, xy, Z_mesh_reshape, cmap=cmap_light)
     plt.scatter(XY_train[:,:1], XY_train[:,1:], marker='.', c=Z_train_colors)
-    
+    plt.scatter(XY_test[:,:1], XY_test[:,1:], marker='.', c=Z_predict)
+
     plt.show()
 
 
