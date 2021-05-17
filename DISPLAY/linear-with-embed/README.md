@@ -19,6 +19,11 @@ Of course, it is not possible to perform a linear classification on such data.
 Attempting to use, e.g. a stochastic gradient descent linear classifier results in quite random classification: 
 
     clf = SGDClassifier(loss="hinge", penalty="l2", max_iter=10)
+    
+It doesn't matter too much that we're using `hinge` loss in this case. We could just as easily use `perceptron`
+in which case we may as well use the `perceptron` api. From the scikitlearn manual:
+    
+    Perceptron() is equivalent to SGDClassifier(loss="perceptron", eta0=1, learning_rate="constant", penalty=None).
 
 ![SGD Bad Prediction](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/linear-with-embed/pictures/sgd_ring_bad_predict.png)
 
