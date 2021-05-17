@@ -63,6 +63,12 @@ However, from a theoretical standpoint it is very interesting.
 If you learned, say, multiple layers of linear functions separated by non-linear embeddings, you could fit quite arbitrary data. 
 In a very rough sense this is what a deep neural network does. 
 
+# Perceptron Algorithm
+
+Note the similarity between this, and the way that the bias term is used for the perceptron algorithm as described on this page: http://www.cs.cornell.edu/courses/cs4780/2018fa/lectures/lecturenote03.html
+
+![Bias term](http://www.cs.cornell.edu/courses/cs4780/2018fa/lectures/images/perceptron/PconstantDim.png)
+
 # With Thanks To 
 
 This bit of experimentation was inspired by https://colah.github.io/posts/2014-03-NN-Manifolds-Topology/ so go look there for more information
