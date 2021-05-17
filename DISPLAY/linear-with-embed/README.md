@@ -20,7 +20,7 @@ Attempting to use, e.g. a stochastic gradient descent linear classifier results 
 
     clf = SGDClassifier(loss="hinge", penalty="l2", max_iter=10)
     
-It doesn't matter too much that we're using `hinge` loss in this case. We could just as easily use `perceptron`
+It doesn't matter too much that we're using `hinge` loss and `l2` penalty in this case. We could just as easily use `perceptron`
 in which case we may as well use the `perceptron` api. From the scikitlearn manual:
     
     Perceptron() is equivalent to SGDClassifier(loss="perceptron", eta0=1, learning_rate="constant", penalty=None).
