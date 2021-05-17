@@ -35,7 +35,7 @@ azlim = [-1, 1]
 
 # Ring
 Na = 1000
-siga = 0.1
+siga = 0.2
 ellipse_width = 0.7
 ellipse_height = 0.7
 thetas = np.linspace(0, 2*math.pi, Na)
@@ -50,7 +50,7 @@ say = y_mults*np.sin(thetas)
 
 # Disc
 Nb = 1000
-sigb = 0.1
+sigb = 0.2
 mu_bx, mu_by, sigma_bx, sigma_by = 0, 0, sigb, sigb # mean and standard deviation
 sbx = np.random.normal(mu_bx, sigma_bx, Nb)
 sby = np.random.normal(mu_by, sigma_by, Nb)
@@ -246,16 +246,16 @@ for a, b in angles:
     floatAndProjections(X_test[:,0:1], X_test[:,1:2], X_test[:,2:3], col=y_predict_colors, main_alph=0.5, proj_alph=0.01)
     plt.show()
 
-    gx = gy = np.arange(-1, 1, 0.01)
-    gX, gY = np.meshgrid(gx, gy)
-    gZ = np.column_stack((gX.ravel(), gY.ravel(), generatingFunction(gX, gY).ravel()))
-    y_predict = clf.predict(gZ)
-    
-    plt.suptitle('Perceptron predicted Values')
-    standardFlatLimitsAndLabels(plt)
-    Z_predict_colors = np.array(['cyan' if x > 0.5 else 'pink' for x in y_predict]).T
+gx = gy = np.arange(-1, 1, 0.01)
+gX, gY = np.meshgrid(gx, gy)
+gZ = np.column_stack((gX.ravel(), gY.ravel(), generatingFunction(gX, gY).ravel()))
+y_predict = clf.predict(gZ)
 
-    plt.scatter(gX, gY, marker='.', c=Z_predict_colors)
-    plt.scatter(sax, say, marker='.', color='blue')
-    plt.scatter(sbx, sby, marker='.', color='red')
-    plt.show()
+plt.suptitle('Perceptron predicted Values')
+standardFlatLimitsAndLabels(plt)
+Z_predict_colors = np.array(['cyan' if x > 0.5 else 'pink' for x in y_predict]).T
+
+plt.scatter(gX, gY, marker='.', c=Z_predict_colors)
+plt.scatter(sax, say, marker='.', color='blue')
+plt.scatter(sbx, sby, marker='.', color='red')
+plt.show()
