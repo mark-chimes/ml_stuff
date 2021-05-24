@@ -127,7 +127,7 @@ print('Training neural net ' + str(random_state) + ' with ' + mlp.solver + ' / '
 
 savedir = 'progfigs/'
 classes = np.unique(Z)
-for minibatch in range(0,3): 
+for minibatch in range(0,20): 
    
     mlp.partial_fit(XY_train, Z_train,classes)
     
@@ -148,21 +148,21 @@ for minibatch in range(0,3):
     plt.suptitle(title)
     plt.contourf(xx, xy, Z_mesh_reshape, cmap=cmap_light)
     plt.scatter(XY_train[:,:1], XY_train[:,1:], marker='.',  c=Z_train_colors)
-    plt.savefig(savedir + 'fitshape_hard_' + str(minibatch) + '.png')
+    plt.savefig(savedir + 'fitshape_hard_' + f"{minibatch:03}" + '.png')
     plt.show()
     
     standardFlatLimitsAndLabels(plt)
     plt.suptitle(title)
     plt.contourf(xx, xy, Z_mesh_reshape, cmap=cmap_light)
     plt.scatter(XY_train[:,:1], XY_train[:,1:], marker='.', alpha=0.2, c=Z_train_colors)
-    plt.savefig(savedir + 'fitshape_soft_' + str(minibatch) + '.png')
+    plt.savefig(savedir + 'fitshape_soft_' + f"{minibatch:03}" + '.png')
     plt.show()
     
     standardFlatLimitsAndLabels(plt)
     plt.suptitle(title)
     plt.contourf(xx, xy, Z_mesh_reshape, cmap=cmap_light)
     plt.scatter(XY_test[:,:1], XY_test[:,1:], marker='.', alpha=0.8, c=Z_test_colors2)
-    plt.savefig(savedir + 'fitshape_test_' + str(minibatch) + '.png')
+    plt.savefig(savedir + 'fitshape_test_' + f"{minibatch:03}" + '.png')
     plt.show()
     
     
@@ -212,7 +212,7 @@ for minibatch in range(0,3):
         
         title = 'Layer ' + str(layer-1) + ' weights for neuron ' + str(neuron) + ' of layer ' + str(layer)
         plt.suptitle(title)
-        plt.savefig(savedir + 'weights_layer_'+ str(layer) + '_neuron_' + str(neuron) + '_batch_' + str(minibatch) + '.png')
+        plt.savefig(savedir + 'weights_layer_'+ str(layer) + '_batch_' + f"{minibatch:03}" +'_neuron_' + str(neuron) +  '.png')
         plt.show() 
           
     all_layer_outputs = []
@@ -248,7 +248,7 @@ for minibatch in range(0,3):
     
         title = 'Layer ' + str(layer)
         plt.suptitle(title)
-        plt.savefig(savedir + 'output_layer_'+ str(layer) + '_batch_' + str(minibatch) + '.png')
+        plt.savefig(savedir + 'output_layer_'+ str(layer) + '_batch_' + f"{minibatch:03}" + '.png')
         plt.show()
         
     neuron = 0
