@@ -20,5 +20,11 @@
 ![Layer 2](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/neural-visual/pictures/nn-vid-final-states/output_layer_2_batch_019.png)
 
 ## Sample Weights
+
+Higher is bigger absolute value - i.e., more of a contribution to the neuron. Where the weights were negative, I inverted the colours, so what you see 
+below is the actual contribution. 
+
+It is only possible to visualize one neuron's weights at a time. I pick out the most contributing neuron to the last layer and work backwards.
+
 ![Layer 1 Neuron 6 Weights](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/neural-visual/pictures/nn-vid-final-states/weights_layer_1_batch_019_neuron_6.png)
 ![Layer 2 Neuron Weights](https://github.com/mark-chimes/ml_stuff/blob/master/DISPLAY/neural-visual/pictures/nn-vid-final-states/weights_layer_2_batch_019_neuron_0.png)
